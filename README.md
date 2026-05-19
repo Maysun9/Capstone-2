@@ -228,6 +228,7 @@ All notifications are sent via **WhatsApp (Twilio) + Email (SMTP)** simultaneous
 | Payment Pending  | User             |
 | Payment Verified | User             |
 | Group Payment    | Payer + Receiver |
+| High Risk        | User             | 
 ---
 
 ## Recommended Flow
