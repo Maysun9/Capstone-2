@@ -270,19 +270,13 @@ public class PaymentService {
     }
         List<Payment> payments = paymentRepository.findPaymentsByUserId(userId);
 
-        double paid = payments.stream()
-                .filter(p -> p.getStatus().equals("PAID"))
-                .mapToDouble(Payment::getAmount)
-                .sum();
+        double paid = payments.stream().filter(p -> p.getStatus().equals("PAID")) .mapToDouble(Payment::getAmount).sum();
 
-        double unpaid = payments.stream()
-                .filter(p -> p.getStatus().equals("UNPAID"))
-                .mapToDouble(Payment::getAmount)
-                .sum();
+        double unpaid = payments.stream().filter(p -> p.getStatus().equals("UNPAID")).mapToDouble(Payment::getAmount).sum();
 
         long late = payments.stream()
-                .filter(p -> p.getLatePenalty() > 0)
-                .count();
+        .filter(p -> p.getLatePenalty() != null && p.getLatePenalty() > 0) 
+        .count();
         Map<String, Object> map = new LinkedHashMap<>();
         map.put("Total Paid", paid);
         map.put("Total Unpaid", unpaid);
