@@ -225,9 +225,9 @@ All notifications are sent via **WhatsApp (Twilio) + Email (SMTP)** simultaneous
 
 | Event            | Sent To          |
 | ---------------- | ---------------- |
-| Payment Pending  | User             |
+| Payment Pending  | User  + Admin    |
 | Payment Verified | User             |
-| Group Payment    | Payer + Receiver |
+| Pay for Friend   | Payer + Receiver |
 | High Risk        | User             | 
 ---
 
