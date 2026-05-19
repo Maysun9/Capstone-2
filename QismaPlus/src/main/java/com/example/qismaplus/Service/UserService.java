@@ -90,7 +90,7 @@ public class UserService {
 
     //=========================-==================================================END CRUD=====================================-===========-===================================
 
-    // ١. خطورة اليوزر وتقرير بسيط
+  // ١. خطورة اليوزر وتقرير بسيط
     public Map<String, Object> detectUserRisk(Integer userId) {
         //استدعيها من الديتا
         User user = userRepository.findUserById(userId);
@@ -119,22 +119,33 @@ public class UserService {
         } else {
             level = "Low Risk";
         }
+        // ارسل رساله إذا كان High Risk
+        if (level.equals("High Risk")) {
+            String message = "Warning " + user.getName() +
+                    ", your financial risk level is HIGH. " +
+                    "Please review your expenses and unpaid payments.";
+
+            whatsAppService.sendMessage(user.getPhoneNumber(), message);
+
+            emailService.sendEmail(user.getEmail(), "High Financial Risk Warning", message);
+        }
         //الرد النهائي
         Map<String, Object> response = new LinkedHashMap<>();
         //اسم اليوزر
-        response.put("user" , user.getName());
+        response.put("User" , user.getName());
         //مصاريفه
         response.put("expenses", expenses);
         //ديونه
-        response.put("debt", debt);
+        response.put("Debt", debt);
         //الراتب
-        response.put("monthly Income", user.getMonthlyIncome());
+        response.put("Monthly Income", user.getMonthlyIncome());
         //نسبة
-        response.put("risk Ratio", riskRatio);
+        response.put("Risk Ratio", riskRatio);
         //المستوى
-        response.put("risk Level", level);
+        response.put("Risk Level", level);
         return response;
     }
+    
     //داشبورد لليوزر
     public Map<String, Object> getDashboard(Integer userId) {
         //استدعيها
