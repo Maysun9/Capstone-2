@@ -264,6 +264,10 @@ public class PaymentService {
 
 
     public Map<String, Object> getPaymentSummary(Integer userId) {
+         User user = userRepository.findUserById(userId);
+    if (user == null) {
+        throw new ApiException("user not found");
+    }
         List<Payment> payments = paymentRepository.findPaymentsByUserId(userId);
 
         double paid = payments.stream()
